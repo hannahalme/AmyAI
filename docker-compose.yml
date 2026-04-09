@@ -1,0 +1,29 @@
+services:
+  tfserving:
+    image: tensorflow/serving:latest
+    container_name: tfserving
+    environment:
+      - MODEL_NAME=ResNet2
+    ports:
+      - "8501:8501"   # REST
+      - "8500:8500"   # gRPC
+    volumes:
+      # Mount ONLY the model directory for this model name
+      - ./models/ResNet2:/models/ResNet2:ro
+
+  client:
+    build:
+      context: ./client
+    container_name: tfclient
+    depends_on:
+      - tfserving
+    environment:
+      - TF_SERVING_HOST=tfserving
+      - TF_SERVING_PORT=8501
+      - MODEL_NAME=ResNet2
+    volumes:
+      - ./data:/data:ro
+      - ./predictions:/out
+    # Default command; override per run if you want
+    command: ["--input-dir", "/data", "--output-dir", "/out", "--pattern", "*.dcm"]
+
