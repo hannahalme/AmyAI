@@ -17,11 +17,6 @@ def parse_args():
         help="Directory containing input files (default: env INPUT_DIR or /data).",
     )
     p.add_argument(
-        "--pattern",
-        default="*.dcm",
-        help="Glob pattern to select input files (default: *.dcm).",
-    )
-    p.add_argument(
         "--output-dir",
         default=os.environ.get("OUTPUT_DIR", "/out"),
         help="Directory to write predictions (default: env OUTPUT_DIR or /out).",
@@ -40,12 +35,6 @@ def parse_args():
         "--model",
         default=os.environ.get("MODEL_NAME", "ResNet2"),
         help="Model name (default: env MODEL_NAME or ResNet2).",
-    )
-    p.add_argument(
-        "--timeout",
-        type=int,
-        default=30,
-        help="Request timeout seconds (default: 30).",
     )
     return p.parse_args()
 
@@ -92,7 +81,7 @@ def main():
     args = parse_args()
     
     # Dicom tags to be extracted
-    tags = ['AccessionNumber','SOPInstanceUID','StudyDate','StudyTime','StationName', 'PatientSex','PatientAge']
+    tags = ['AccessionNumber','SOPInstanceUID','StudyDate','StudyTime','StationName','PatientSex','PatientAge']
 
     # Initialize data dictionary
     data_dict = {tag: [] for tag in tags}

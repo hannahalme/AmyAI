@@ -26,5 +26,5 @@ services:
       - ./data:/data:ro
       - ./predictions:/out
     # Default command; override per run if you want
-    command: ["--input-dir", "/data", "--output-dir", "/out", "--pattern", "*.dcm"]
+    command: ["--input-dir", "/data", "--output-dir", "/out", "--model", "ResNet2"]
 

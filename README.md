@@ -27,7 +27,7 @@ sudo docker pull tensorflow/serving
 sudo docker-compose build --no-cache \
   --build-arg http_proxy \
   --build-arg https_proxy \
-  --build-arg no_proxy \
+  --build-arg no_proxy
 ```
 
 ## Move the whole-body bone scintigraphy images (DICOM files) to ./data folder
@@ -35,15 +35,34 @@ You can also add other image types or modalities, but the classifier will only p
 
 ## Set up the container
 ```bash
-sudo docker-compose up 
+sudo docker-compose run
 ```
-Optional arguments:
---input-dir : the directory where your DICOM data is (default: /data)
---output-dir : the directory where you want to save the output results (default: /out)
---pattern : Glob pattern to select input files (default: *.dcm)
---host : TF Serving host (default: tfserving) 
---port : TF Serving REST port (default: 8501)
---model : Model name (default: ResNet2)
+If your DICOM files are in some other directory, use:
+```bash
+sudo docker-compose run --rm   -v /path/to/data/dir:/data:ro   client
+```
+
+## Check output files
+The results appear in directory "predictions". There should be two files:
+- test_data_classification_results.csv
+- test_data_classification_results.json
+
+The files include the following fields:
+AccessionNumber
+SOPInstanceUID
+StudyDate
+StudyTime
+StationName
+PatientSex
+PatientAge
+prediction
+probability
+
+Prediction is the predicted class (0 for no myocardial uptake or 1 for myocardial uptake) and probability the associated probability for prediction.
 
 
-
+## Using alternative CNN models
+You can save your Tensorflow model to ./models and change the last line of docker-compose.yml:
+```bash
+command: ["--input-dir", "/data", "--output-dir", "/out", "--model", "yourmodel"]
+```
