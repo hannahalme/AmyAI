@@ -172,7 +172,11 @@ def main():
 			    
 			    # Post a response to tfserving
 			    url = f"http://{args.host}:{args.port}/v1/models/{args.model}:predict"
-			    response = requests.post(url, data=data, headers=headers)
+			    try: 
+			        response = requests.post(url, data=data, headers=headers, timeout=2)
+			    except Exception:
+			        sys.exit(1)
+			        
 			    result = response.json()["predictions"][0]
 			    
 

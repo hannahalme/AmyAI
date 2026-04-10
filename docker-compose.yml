@@ -9,17 +9,18 @@ services:
       - "8500:8500"   # gRPC
     volumes:
       # Mount ONLY the model directory for this model name
-      - ./models/ResNet2:/models/ResNet2:ro
+      - ./models/ResNet2:/models/ResNet2:ro      
 
   client:
     build:
       context: ./client
+    restart: on-failure
     container_name: tfclient
     depends_on:
       - tfserving
     environment:
-      - TF_SERVING_HOST=tfserving
-      - TF_SERVING_PORT=8501
+      - TF_HOST=tfserving
+      - TF_PORT=8501
       - MODEL_NAME=ResNet2
     volumes:
       - ./data:/data:ro

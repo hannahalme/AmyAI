@@ -7,8 +7,10 @@ ARG http_proxy
 ARG https_proxy
 ARG no_proxy
 
-ENV http_proxy=${http_proxy} https_proxy=${https_proxy} no_proxy=localhost,127.0.0.1,tfserving
-ENV HTTP_PROXY=${http_proxy} HTTPS_PROXY=${https_proxy} NO_PROXY=localhost,127.0.0.1,tfserving
+ENV http_proxy=${http_proxy} https_proxy=${https_proxy} 
+ENV HTTP_PROXY=${http_proxy} HTTPS_PROXY=${https_proxy} 
+ENV no_proxy=localhost,127.0.0.1,tfserving
+ENV NO_PROXY=localhost,127.0.0.1,tfserving
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
