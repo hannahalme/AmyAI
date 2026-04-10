@@ -1,6 +1,8 @@
 # AmyAI
 
 ## Classification of myocardial uptake in bone scintigraphy
+AmyAI Docker container reads whole-body bone scintigraphy images (DICOM), preprocesses the images and detects myocardial uptake using a convolutional neural network. The results are saved in a csv file.
+
 Please cite: Halme, Hanna-Leena, et al. "Convolutional neural networks for detection of transthyretin amyloidosis in 2D scintigraphy images." EJNMMI research 12.1 (2022): 27.
 
 
