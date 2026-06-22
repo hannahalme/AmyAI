@@ -3,13 +3,13 @@ services:
     image: tensorflow/serving:latest
     container_name: tfserving
     environment:
-      - MODEL_NAME=ResNet2
+      - MODEL_NAME=ResNet2_2026
     ports:
       - "8501:8501"   # REST
       - "8500:8500"   # gRPC
     volumes:
       # Mount ONLY the model directory for this model name
-      - ./models/ResNet2:/models/ResNet2:ro      
+      - ./models/ResNet2_2026:/models/ResNet2_2026:ro      
 
   client:
     build:
@@ -21,10 +21,10 @@ services:
     environment:
       - TF_HOST=tfserving
       - TF_PORT=8501
-      - MODEL_NAME=ResNet2
+      - MODEL_NAME=ResNet2_2026
     volumes:
       - ./data:/data:ro
       - ./predictions:/out
     # Default command; override per run if you want
-    command: ["--input-dir", "/data", "--output-dir", "/out", "--model", "ResNet2"]
+    command: ["--input-dir", "/data", "--output-dir", "/out", "--model", "ResNet2_2026"]
 
